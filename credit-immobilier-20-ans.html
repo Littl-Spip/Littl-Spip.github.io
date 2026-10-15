@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crédit immobilier sur 20 ans — mensualité et coût total</title>
+<meta name="description" content="Calcule la mensualité et le coût total d'un crédit immobilier sur 20 ans. Tableau d'amortissement et assurance inclus. Gratuit.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Crédit 20 ans</div>
+<h1>Crédit immobilier sur 20 ans</h1>
+<p class="lead">Estime ta mensualité et le coût total de ton crédit sur 20 ans.</p>
+<div class="card"><div class="grid">
+  <div><label for="capital">Montant emprunté (€)</label><input id="capital" type="number" value="200000"></div>
+  <div><label for="taux">Taux annuel (%)</label><input id="taux" type="number" step="0.01" value="3.5"></div>
+  <div><label for="assurance">Assurance annuelle (% du capital)</label><input id="assurance" type="number" step="0.01" value="0.34"></div>
+  <div><label>Durée</label><input type="text" value="20 ans" disabled></div>
+</div>
+<button id="calc">Calculer la mensualité</button>
+<div class="result" id="res">
+  <div class="big" id="mens">— <small>par mois (assurance incluse)</small></div>
+  <div style="margin-top:12px">
+    <div class="kv"><span>Mensualité hors assurance</span><b id="h">—</b></div>
+    <div class="kv"><span>Total des intérêts</span><b id="i">—</b></div>
+    <div class="kv"><span>Total de l'assurance</span><b id="at">—</b></div>
+    <div class="kv"><span>Coût total du crédit</span><b id="ct">—</b></div>
+    <div class="kv"><span>Montant total remboursé</span><b id="tt">—</b></div>
+  </div>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>20 ans : bon compromis ?</h2>
+<p>Allonger la durée réduit la mensualité mais augmente les intérêts totaux. Sur 20 ans, tu rembourses des mensualités plus basses mais davantage d'intérêts au total. Compare plusieurs durées dans notre <a href="simulateur-credit-immobilier.html">simulateur de crédit immobilier</a>.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>L'assurance est-elle incluse ?</summary><p>Oui, elle s'ajoute à la mensualité principale.</p></details><details><summary>Pourquoi choisir 20 ans ?</summary><p>C'est un équilibre entre mensualité et coût total, à comparer avec d'autres durées.</p></details><details><summary>Le TAEG est-il calculé ?</summary><p>Non, il inclut des frais (dossier, garantie) que ta banque indique dans son offre.</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>var eur=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);};var eur2=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:2}).format(n);};
+document.getElementById('calc').addEventListener('click',function(){
+  var C=+document.getElementById('capital').value||0;
+  var taux=+document.getElementById('taux').value||0;
+  var ass=+document.getElementById('assurance').value||0;
+  var n=20*12, i=taux/100/12;
+  if(C<=0){alert('Renseigne un montant.');return;}
+  var m=i===0?C/n:C*i/(1-Math.pow(1+i,-n));
+  var ma=C*(ass/100)/12;
+  var inter=m*n-C, at=ma*n;
+  document.getElementById('mens').innerHTML=eur2(m+ma)+' <small>par mois (assurance incluse)</small>';
+  document.getElementById('h').textContent=eur2(m);
+  document.getElementById('i').textContent=eur(inter);
+  document.getElementById('at').textContent=eur(at);
+  document.getElementById('ct').textContent=eur(inter+at);
+  document.getElementById('tt').textContent=eur(C+inter+at);
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>

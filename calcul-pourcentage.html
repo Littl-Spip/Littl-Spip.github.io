@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcul de pourcentage — outil gratuit</title>
+<meta name="description" content="Calcule un pourcentage d'un nombre, une augmentation ou une diminution, et la variation entre deux valeurs. Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Calcul pourcentage</div>
+<h1>Calcul de pourcentage</h1>
+<p class="lead">Trois calculateurs : pourcentage d'un nombre, variation, et passage d'une valeur à une autre.</p>
+<div class="card"><h3>Pourcentage d'un nombre</h3>
+<div class="grid">
+  <div><label for="pct">Pourcentage (%)</label><input id="pct" type="number" value="20"></div>
+  <div><label for="val">Nombre</label><input id="val" type="number" value="150"></div>
+</div>
+<button id="calc">Calculer</button>
+<div class="result" id="res">
+  <div class="big" id="out">—</div>
+  <div class="kv"><span>Augmentation de <span id="lp">—</span></span><b id="aug">—</b></div>
+  <div class="kv"><span>Diminution de <span id="lp2">—</span></span><b id="dim">—</b></div>
+</div>
+<h3 style="margin-top:22px">Variation entre deux valeurs</h3>
+<div class="grid">
+  <div><label for="v1">Valeur de départ</label><input id="v1" type="number" value="120"></div>
+  <div><label for="v2">Valeur d'arrivée</label><input id="v2" type="number" value="150"></div>
+</div>
+<button id="calc2">Calculer la variation</button>
+<div class="result" id="res2"><div class="big" id="var">— <small>variation</small></div></div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Formules</h2><p>Pourcentage d'un nombre : <em>nombre × (pourcentage ÷ 100)</em>. Variation : <em>((arrivée − départ) ÷ départ) × 100</em>.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>Comment calculer une remise ?</summary><p>Multiplie le prix par (1 − remise/100), ou utilise la diminution ci-dessus.</p></details><details><summary>Comment calculer une hausse ?</summary><p>Multiplie par (1 + hausse/100).</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>document.getElementById('calc').addEventListener('click',function(){
+  var p=+document.getElementById('pct').value||0, v=+document.getElementById('val').value||0;
+  document.getElementById('out').textContent=p+' % de '+v+' = '+(v*p/100);
+  document.getElementById('lp').textContent=p+' %';
+  document.getElementById('lp2').textContent=p+' %';
+  document.getElementById('aug').textContent=(v*(1+p/100)).toFixed(2);
+  document.getElementById('dim').textContent=(v*(1-p/100)).toFixed(2);
+  document.getElementById('res').classList.add('show');
+});
+document.getElementById('calc2').addEventListener('click',function(){
+  var a=+document.getElementById('v1').value||0, b=+document.getElementById('v2').value||0;
+  if(a===0){alert('La valeur de départ doit être différente de 0.');return;}
+  var vr=(b-a)/a*100;
+  document.getElementById('var').innerHTML=(vr>=0?'+':'')+vr.toFixed(2)+' % <small>variation</small>';
+  document.getElementById('res2').classList.add('show');
+});</script>
+</body></html>

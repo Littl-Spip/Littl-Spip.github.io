@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcul de l'IMC (indice de masse corporelle) — gratuit</title>
+<meta name="description" content="Calcule ton IMC à partir de ton poids et de ta taille, avec interprétation (insuffisance, normal, surpoids, obésité). Gratuit.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Calcul IMC</div>
+<h1>Calcul de l'IMC</h1>
+<p class="lead">Calcule ton indice de masse corporelle (IMC) et sa signification.</p>
+<div class="card"><div class="grid">
+  <div><label for="poids">Poids (kg)</label><input id="poids" type="number" value="70"></div>
+  <div><label for="taille">Taille (cm)</label><input id="taille" type="number" value="175"></div>
+</div>
+<button id="calc">Calculer mon IMC</button>
+<div class="result" id="res">
+  <div class="big" id="imc">— <small>IMC</small></div>
+  <div class="kv"><span>Interprétation</span><b id="interp">—</b></div>
+  <p class="note">L'IMC est un indicateur général ; il ne remplace pas l'avis d'un médecin.</p>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Comment est calculé l'IMC ?</h2><p>IMC = poids (kg) ÷ taille² (m). Selon l'OMS : &lt; 18,5 insuffisance pondérale · 18,5–25 corpulence normale · 25–30 surpoids · &gt; 30 obésité.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>L'IMC suffit-il ?</summary><p>Non, il ne tient pas compte de la masse musculaire ni de la répartition des graisses.</p></details><details><summary>Pour qui n'est-il pas valable ?</summary><p>Enfants, femmes enceintes et sportifs très musclés.</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>document.getElementById('calc').addEventListener('click',function(){
+  var p=+document.getElementById('poids').value||0, t=(+document.getElementById('taille').value||0)/100;
+  if(p<=0||t<=0){alert('Renseigne un poids et une taille.');return;}
+  var imc=p/(t*t);
+  var i= imc<18.5?'Insuffisance pondérale': imc<25?'Corpulence normale': imc<30?'Surpoids':'Obésité';
+  document.getElementById('imc').innerHTML=imc.toFixed(1)+' <small>IMC</small>';
+  document.getElementById('interp').textContent=i;
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>

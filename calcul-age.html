@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcul d'âge — à partir de la date de naissance (gratuit)</title>
+<meta name="description" content="Calcule ton âge exact en années, mois et jours à partir de ta date de naissance. Gratuit, instantané, sans inscription.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Calcul âge</div>
+<h1>Calcul d'âge</h1>
+<p class="lead">Découvre ton âge exact (années, mois, jours) à une date choisie.</p>
+<div class="card"><div class="grid">
+  <div><label for="naissance">Date de naissance</label><input id="naissance" type="date"></div>
+  <div><label for="ref">À la date du</label><input id="ref" type="date"></div>
+</div>
+<button id="calc">Calculer l'âge</button>
+<div class="result" id="res">
+  <div class="big" id="age">— <small>ans</small></div>
+  <div class="kv"><span>Âge détaillé</span><b id="det">—</b></div>
+  <div class="kv"><span>Total en jours</span><b id="jours">—</b></div>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Usage</h2><p>Utile pour connaître un âge exact, calculer une ancienneté ou l'âge d'un enfant. Le calcul tient compte des années bissextiles.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>Le calcul gère-t-il les mois de durées différentes ?</summary><p>Oui, il compte en jours réels puis convertit en années, mois et jours.</p></details><details><summary>Puis-je calculer à une date passée ?</summary><p>Oui, choisis n'importe quelle date de référence.</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>document.getElementById('ref').value=new Date().toISOString().slice(0,10);
+document.getElementById('calc').addEventListener('click',function(){
+  var n=new Date(document.getElementById('naissance').value);
+  var r=new Date(document.getElementById('ref').value);
+  if(isNaN(n)||isNaN(r)||r<n){alert('Vérifie les dates.');return;}
+  var y=r.getFullYear()-n.getFullYear();
+  var m=r.getMonth()-n.getMonth();
+  var d=r.getDate()-n.getDate();
+  if(d<0){m--; d+=new Date(r.getFullYear(),r.getMonth(),0).getDate();}
+  if(m<0){y--; m+=12;}
+  var jours=Math.floor((r-n)/86400000);
+  document.getElementById('age').innerHTML=y+' <small>ans</small>';
+  document.getElementById('det').textContent=y+' ans, '+m+' mois et '+d+' jours';
+  document.getElementById('jours').textContent=jours.toLocaleString('fr-FR')+' jours';
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>

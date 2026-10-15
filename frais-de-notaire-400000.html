@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frais de notaire pour un bien à 400 000 € (ancien et neuf)</title>
+<meta name="description" content="Combien de frais de notaire pour un logement à 400 000 € ? Estimation dans l'ancien (~7,5 %) et le neuf (~2,5 %). Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Frais de notaire 400 000 €</div>
+<h1>Frais de notaire pour un bien à 400 000 €</h1>
+<p class="lead">Estime les frais d'acquisition d'un logement affiché à 400 000 €.</p>
+<div class="card"><div class="grid">
+  <div><label for="prix">Prix d'achat (€)</label><input id="prix" type="number" value="400000"></div>
+  <div><label for="type">Type de bien</label><select id="type"><option value="ancien">Ancien (7 à 8 %)</option><option value="neuf">Neuf / VEFA (2 à 3 %)</option></select></div>
+</div>
+<button id="calc">Estimer les frais</button>
+<div class="result" id="res">
+  <div class="big" id="tot">— <small>de frais estimés</small></div>
+  <div style="margin-top:12px">
+    <div class="kv"><span>Droits de mutation</span><b id="l1">—</b></div>
+    <div class="kv"><span>Émoluments du notaire</span><b id="l2">—</b></div>
+    <div class="kv"><span>Contribution de sécurité immobilière</span><b id="l3">—</b></div>
+    <div class="kv"><span>Débours et frais divers</span><b id="l4">—</b></div>
+    <div class="kv"><span><b>Total frais de notaire</b></span><b id="l5">—</b></div>
+    <div class="kv"><span>Budget total (prix + frais)</span><b id="l6">—</b></div>
+  </div>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Pour un bien à 400 000 €</h2>
+<p>Dans l'ancien, compte environ <b>30 800 €</b> de frais ; dans le neuf, environ <b>9 680 €</b>. La différence vient surtout des droits de mutation, bien plus faibles dans le neuf. Voir aussi notre <a href="frais-de-notaire.html">simulateur complet</a> et notre <a href="capacite-emprunt-immobilier.html">calcul de capacité d'emprunt</a>.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>Ces frais sont-ils négociables ?</summary><p>Les émoluments sont encadrés par décret ; les taxes, elles, sont fixes.</p></details><details><summary>Quand paie-t-on les frais de notaire ?</summary><p>Le jour de la signature de l'acte définitif.</p></details><details><summary>Le neuf est-il vraiment moins cher ?</summary><p>Oui, autour de 2 à 3 % contre 7 à 8 % dans l'ancien.</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>var eur=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);};
+document.getElementById('calc').addEventListener('click',function(){
+  var prix=+document.getElementById('prix').value||0, t=document.getElementById('type').value;
+  if(prix<=0){alert('Renseigne un prix.');return;}
+  var r=t==='neuf'?{mut:0.00715,emo:0.00814,csi:0.001,div:0.005}:{mut:0.058,emo:0.00814,csi:0.001,div:0.010};
+  var l1=prix*r.mut,l2=prix*r.emo,l3=prix*r.csi,l4=prix*r.div,tot=l1+l2+l3+l4;
+  document.getElementById('tot').innerHTML=eur(tot)+' <small>de frais estimés</small>';
+  document.getElementById('l1').textContent=eur(l1);
+  document.getElementById('l2').textContent=eur(l2);
+  document.getElementById('l3').textContent=eur(l3);
+  document.getElementById('l4').textContent=eur(l4);
+  document.getElementById('l5').textContent=eur(tot);
+  document.getElementById('l6').textContent=eur(prix+tot);
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>

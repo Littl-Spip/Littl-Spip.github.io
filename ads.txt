@@ -1,0 +1,12 @@
+# ads.txt — CalcUtile
+
+Après validation de ton compte Google AdSense, Google te donnera une ligne
+de ce type :
+
+    google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+Remplace la ligne « Exemple » ci-dessous par celle que Google t'indique
+(garde la tienne telle quelle, sans commentaire devant), puis enregistre.
+
+# Exemple (à décommenter et remplacer par ton identifiant) :
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

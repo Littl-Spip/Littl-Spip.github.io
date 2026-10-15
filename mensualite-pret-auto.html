@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mensualité d'un prêt auto — simulateur gratuit</title>
+<meta name="description" content="Calcule la mensualité et le coût total d'un crédit auto selon le montant, l'apport, le taux et la durée. Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Prêt auto</div>
+<h1>Mensualité d'un prêt auto</h1>
+<p class="lead">Estime la mensualité de ton crédit voiture.</p>
+<div class="card"><div class="grid">
+  <div><label for="prix">Prix du véhicule (€)</label><input id="prix" type="number" value="20000"></div>
+  <div><label for="apport">Apport (€)</label><input id="apport" type="number" value="3000"></div>
+  <div><label for="taux">Taux annuel (%)</label><input id="taux" type="number" step="0.01" value="4.5"></div>
+  <div><label for="duree">Durée (mois)</label><input id="duree" type="number" value="60"></div>
+</div>
+<button id="calc">Calculer</button>
+<div class="result" id="res">
+  <div class="big" id="mens">— <small>par mois</small></div>
+  <div class="kv"><span>Montant financé</span><b id="fin">—</b></div>
+  <div class="kv"><span>Total des intérêts</span><b id="int">—</b></div>
+  <div class="kv"><span>Coût total du crédit</span><b id="tt">—</b></div>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Comment ça marche ?</h2><p>On finance la différence entre le prix et l'apport, puis on applique la formule des mensualités constantes. Un apport plus élevé réduit les intérêts. Voir aussi notre <a href="simulateur-credit-immobilier.html">simulateur de crédit immobilier</a>.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>Faut-il un apport ?</summary><p>Ce n'est pas obligatoire mais cela réduit le coût du crédit.</p></details><details><summary>Le taux dépend de quoi ?</summary><p>De la durée, de ton profil et du véhicule (neuf ou occasion).</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>var eur=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);};var eur2=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:2}).format(n);};
+document.getElementById('calc').addEventListener('click',function(){
+  var prix=+document.getElementById('prix').value||0, app=+document.getElementById('apport').value||0;
+  var taux=+document.getElementById('taux').value||0, n=+document.getElementById('duree').value||0;
+  var C=prix-app; if(C<=0||n<=0){alert('Vérifie le montant et la durée.');return;}
+  var i=taux/100/12, m=i===0?C/n:C*i/(1-Math.pow(1+i,-n));
+  document.getElementById('mens').innerHTML=eur2(m)+' <small>par mois</small>';
+  document.getElementById('fin').textContent=eur(C);
+  document.getElementById('int').textContent=eur(m*n-C);
+  document.getElementById('tt').textContent=eur(m*n);
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>

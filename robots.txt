@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.calc-utile.fr/sitemap.xml
+Sitemap: https://littl-spip.github.io/calc-utile/sitemap.xml

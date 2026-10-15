@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salaire brut en net : 2 000 € par mois (2026, gratuit)</title>
+<meta name="description" content="Combien fait 2 000 € brut en net ? Estimation du salaire net mensuel et annuel après cotisations salariales. Simulation gratuite et instantanée.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="index.html">Calc<span>Utile</span></a>
+<nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="impot-revenu.html">Impôts</a><a href="salaire-brut-net.html">Salaire</a></nav></div></header>
+<main><div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Salaire 2 000 € brut en net</div>
+<h1>Salaire brut en net : 2 000 € par mois</h1>
+<p class="lead">Voici l'estimation de ce que représente 2 000 € brut en net par mois.</p>
+<div class="card"><div class="grid">
+  <div><label for="brut">Salaire brut mensuel (€)</label><input id="brut" type="number" value="2000"></div>
+  <div><label for="statut">Statut</label><select id="statut"><option value="22">Non-cadre (~22 %)</option><option value="25">Cadre (~25 %)</option></select></div>
+</div>
+<button id="calc">Calculer le net</button>
+<div class="result" id="res">
+  <div class="big" id="net">— <small>net mensuel estimé</small></div>
+  <div style="margin-top:12px">
+    <div class="kv"><span>Brut mensuel</span><b id="b">—</b></div>
+    <div class="kv"><span>Cotisations salariales estimées</span><b id="c">—</b></div>
+    <div class="kv"><span>Net mensuel (avant impôt)</span><b id="nm">—</b></div>
+    <div class="kv"><span>Net annuel (avant impôt)</span><b id="a">—</b></div>
+  </div>
+  <p class="note">Estimation indicative pour un salarié du privé. Ton bulletin de paie fait foi.</p>
+</div></div>
+<div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+<h2>Avec 2 000 € brut, quel net ?</h2>
+<p>Un salarié du privé non-cadre voit environ 22 % de son brut partir en cotisations salariales (Sécurité sociale, retraite, chômage, CSG/CRDS, mutuelle). Un cadre cotise davantage, autour de 25 %. C'est ce net <em>avant impôt</em> : le prélèvement à la source s'applique ensuite. Pour l'estimer, utilise notre <a href="impot-revenu.html">simulateur d'impôt sur le revenu</a>.</p>
+<h2>Questions fréquentes</h2>
+<div class="faq"><details><summary>Le résultat est-il exact ?</summary><p>C'est une estimation moyenne. Le taux réel dépend de ta convention collective, de ta mutuelle et de ton entreprise.</p></details><details><summary>Le net inclut-il l'impôt ?</summary><p>Non, c'est le net avant prélèvement à la source.</p></details><details><summary>Et si je suis cadre ?</summary><p>Choisis « Cadre » dans le menu : le taux de cotisations est plus élevé.</p></details></div>
+</div></main>
+<footer class="site"><div class="wrap"><p>CalcUtile — résultats indicatifs, ne constituent pas un conseil professionnel.</p><p><a href="privacy.html">Confidentialité</a> · <a href="index.html">Accueil</a></p></div></footer>
+<script>var eur=function(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);};
+document.getElementById('calc').addEventListener('click',function(){
+  var brut=+document.getElementById('brut').value||0;
+  var rate=+document.getElementById('statut').value||22;
+  if(brut<=0){alert('Renseigne un salaire brut.');return;}
+  var cot=brut*rate/100, net=brut-cot;
+  document.getElementById('net').innerHTML=eur(net)+' <small>net mensuel estimé</small>';
+  document.getElementById('b').textContent=eur(brut);
+  document.getElementById('c').textContent=eur(cot);
+  document.getElementById('nm').textContent=eur(net);
+  document.getElementById('a').textContent=eur(net*12);
+  document.getElementById('res').classList.add('show');
+});</script>
+</body></html>
