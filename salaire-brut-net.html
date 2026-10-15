@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salaire brut en net — simulateur gratuit 2026</title>
+<meta name="description" content="Convertis ton salaire brut en net en un clic (non-cadre, cadre). Estimation des cotisations salariales, mensuelle et annuelle. Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">Calc<span>Utile</span></a>
+    <nav class="top"><a href="index.html">Accueil</a><a href="impot-revenu.html">Impôt</a><a href="simulateur-credit-immobilier.html">Crédit</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Accueil</a> › Salaire brut en net</div>
+    <h1>Simulateur : salaire brut en net</h1>
+    <p class="lead">Estime ce qu'il te reste chaque mois après cotisations salariales.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="brut">Salaire brut mensuel (€)</label><input id="brut" type="number" value="3000"></div>
+        <div><label for="statut">Statut</label>
+          <select id="statut"><option value="22">Non-cadre (~22 %)</option><option value="25">Cadre (~25 %)</option><option value="custom">Personnalisé</option></select>
+        </div>
+        <div id="wraprate" style="display:none"><label for="rate">Taux de cotisations (%)</label><input id="rate" type="number" step="0.1" value="23"></div>
+        <div><label for="temps">Temps de travail</label>
+          <select id="temps"><option value="1">Temps plein (100 %)</option><option value="0.8">80 %</option><option value="0.5">50 %</option></select>
+        </div>
+      </div>
+      <button id="calc">Calculer mon salaire net</button>
+
+      <div class="result" id="res">
+        <div class="big" id="net">— <small>net mensuel estimé</small></div>
+        <div style="margin-top:12px">
+          <div class="kv"><span>Salaire brut mensuel</span><b id="b">—</b></div>
+          <div class="kv"><span>Cotisations salariales estimées</span><b id="c">—</b></div>
+          <div class="kv"><span>Net mensuel (avant impôt)</span><b id="nm">—</b></div>
+          <div class="kv"><span>Net annuel (avant impôt)</span><b id="na">—</b></div>
+        </div>
+        <p class="note">Estimation indicative — les taux réels dépendent de ta convention collective, de ta mutuelle et de ton entreprise.</p>
+      </div>
+    </div>
+
+    <div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+
+    <h2>Comment passer du brut au net ?</h2>
+    <p>Le salaire net se calcule en retirant du brut les cotisations salariales : Sécurité sociale, retraite, chômage, CSG/CRDS, mutuelle… Pour un non-cadre du privé, comptez environ 22 % du brut, un peu plus pour les cadres. Ce net est « avant impôt » : le prélèvement à la source s'applique ensuite. Pour l'estimer, utilise notre <a href="impot-revenu.html">simulateur d'impôt sur le revenu</a>.</p>
+
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+      <details><summary>Pourquoi un cadre paie-t-il plus de cotisations ?</summary><p>Les cadres cotisent davantage à la retraite complémentaire et à la prévoyance, ce qui augmente le total des cotisations (souvent ~25 %).</p></details>
+      <details><summary>Le net affiché inclut-il l'impôt ?</summary><p>Non. C'est le net avant prélèvement à la source.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap"><p>CalcUtile — estimatif. Ton bulletin de paie fait foi.</p><p><a href="privacy.html">Confidentialité</a></p></div></footer>
+
+<script>
+var eur = function(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); };
+document.getElementById('statut').addEventListener('change', function(){
+  document.getElementById('wraprate').style.display = this.value==='custom' ? '' : 'none';
+});
+document.getElementById('calc').addEventListener('click', function(){
+  var brut=+document.getElementById('brut').value||0;
+  var st=document.getElementById('statut').value;
+  var rate = st==='custom' ? (+document.getElementById('rate').value||0) : +st;
+  var temps=+document.getElementById('temps').value;
+  brut = brut*temps;
+  if(brut<=0){ alert('Renseigne un salaire brut.'); return; }
+  var cot=brut*rate/100;
+  var net=brut-cot;
+  document.getElementById('net').innerHTML=eur(net)+' <small>net mensuel estimé</small>';
+  document.getElementById('b').textContent=eur(brut);
+  document.getElementById('c').textContent=eur(cot);
+  document.getElementById('nm').textContent=eur(net);
+  document.getElementById('na').textContent=eur(net*12);
+  document.getElementById('res').classList.add('show');
+});
+</script>
+</body>
+</html>

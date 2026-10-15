@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulateur d'intérêts composés — épargne et placements (gratuit)</title>
+<meta name="description" content="Calcule la valeur future de ton épargne avec les intérêts composés : capital initial, versements mensuels, taux et durée. Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">Calc<span>Utile</span></a>
+    <nav class="top"><a href="index.html">Accueil</a><a href="impot-revenu.html">Impôt</a><a href="simulateur-credit-immobilier.html">Crédit</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Accueil</a> › Intérêts composés</div>
+    <h1>Simulateur d'intérêts composés</h1>
+    <p class="lead">Découvre combien ton épargne peut devenir grâce aux intérêts composés.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="initial">Capital de départ (€)</label><input id="initial" type="number" value="5000"></div>
+        <div><label for="versement">Versement mensuel (€)</label><input id="versement" type="number" value="200"></div>
+        <div><label for="taux">Rendement annuel (%)</label><input id="taux" type="number" step="0.1" value="5"></div>
+        <div><label for="duree">Durée (années)</label><input id="duree" type="number" value="20"></div>
+      </div>
+      <button id="calc">Calculer</button>
+
+      <div class="result" id="res">
+        <div class="big" id="final">— <small>valeur finale estimée</small></div>
+        <div style="margin-top:12px">
+          <div class="kv"><span>Total versé (capital + versements)</span><b id="verse">—</b></div>
+          <div class="kv"><span>Intérêts générés</span><b id="gain">—</b></div>
+          <div class="kv"><span>Multiplicateur</span><b id="mult">—</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+
+    <h2>La magie des intérêts composés</h2>
+    <p>Les intérêts composés réinvestissent les gains pour produire eux-mêmes des intérêts. Résultat : la dernière année rapporte bien plus que la première. Plus l'horizon est long, plus l'effet est spectaculaire — c'est pourquoi commencer tôt compte davantage que verser beaucoup.</p>
+
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+      <details><summary>Quel rendement choisir ?</summary><p>Tout dépend du placement : livret ~2-3 %, assurance-vie prudente ~3-4 %, placements en actions ~5-8 % en moyenne mais avec du risque. Ce simulateur n'intègre pas la fiscalité ni l'inflation.</p></details>
+      <details><summary>Les versements sont-ils en fin de mois ?</summary><p>Oui, chaque versement est placé en fin de mois puis capitalisé.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap"><p>CalcUtile — projection indicative, aucune garantie de rendement.</p><p><a href="privacy.html">Confidentialité</a></p></div></footer>
+
+<script>
+var eur = function(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); };
+document.getElementById('calc').addEventListener('click', function(){
+  var P=+document.getElementById('initial').value||0;
+  var v=+document.getElementById('versement').value||0;
+  var tauxA=+document.getElementById('taux').value||0;
+  var annees=+document.getElementById('duree').value||0;
+  var r=tauxA/100/12, n=Math.round(annees*12);
+  var solde=P;
+  for(var k=0;k<n;k++){ solde = solde*(1+r) + v; }
+  var verse = P + v*n;
+  document.getElementById('final').innerHTML=eur(solde)+' <small>valeur finale estimée</small>';
+  document.getElementById('verse').textContent=eur(verse);
+  document.getElementById('gain').textContent=eur(solde-verse);
+  document.getElementById('mult').textContent=(verse>0?(solde/verse).toFixed(2):'—')+'×';
+  document.getElementById('res').classList.add('show');
+});
+</script>
+</body>
+</html>

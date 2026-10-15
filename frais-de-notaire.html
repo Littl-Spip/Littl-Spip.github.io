@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulateur de frais de notaire — ancien et neuf (gratuit)</title>
+<meta name="description" content="Estime les frais de notaire pour l'achat d'un logement ancien ou neuf, avec le détail (droits de mutation, émoluments, débours). Gratuit, instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">Calc<span>Utile</span></a>
+    <nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="capacite-emprunt-immobilier.html">Capacité</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Accueil</a> › Frais de notaire</div>
+    <h1>Simulateur de frais de notaire</h1>
+    <p class="lead">Estime les frais d'acquisition d'un logement ancien ou neuf.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="prix">Prix d'achat (€)</label><input id="prix" type="number" value="250000"></div>
+        <div><label for="type">Type de bien</label>
+          <select id="type"><option value="ancien">Ancien (7 à 8 %)</option><option value="neuf">Neuf / VEFA (2 à 3 %)</option></select>
+        </div>
+      </div>
+      <button id="calc">Estimer mes frais de notaire</button>
+
+      <div class="result" id="res">
+        <div class="big" id="tot">— <small>de frais estimés</small></div>
+        <div style="margin-top:12px">
+          <div class="kv"><span>Droits de mutation (enregistrement)</span><b id="l1">—</b></div>
+          <div class="kv"><span>Émoluments du notaire</span><b id="l2">—</b></div>
+          <div class="kv"><span>Contribution de sécurité immobilière</span><b id="l3">—</b></div>
+          <div class="kv"><span>Débours et frais divers</span><b id="l4">—</b></div>
+          <div class="kv"><span><b>Total frais de notaire</b></span><b id="l5">—</b></div>
+          <div class="kv"><span>Budget total (prix + frais)</span><b id="l6">—</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+
+    <h2>Que contiennent les frais de notaire ?</h2>
+    <p>Ce qu'on appelle « frais de notaire » est composé en majorité de taxes reversées à l'État, pas de la rémunération du notaire :</p>
+    <ul style="margin:10px 0 10px 20px">
+      <li><b>Droits de mutation</b> : la part la plus lourde dans l'ancien (~5,8 %). Réduits à ~0,7 % dans le neuf.</li>
+      <li><b>Émoluments du notaire</b> : rémunération fixée par décret, dégressive selon le montant.</li>
+      <li><b>Contribution de sécurité immobilière</b> : 0,10 % du prix.</li>
+      <li><b>Débours</b> : frais avancés (documents d'urbanisme, cadastre, etc.).</li>
+    </ul>
+
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+      <details><summary>Pourquoi le neuf coûte-t-il beaucoup moins cher ?</summary><p>Dans le neuf (VEFA), les droits de mutation sont fortement réduits, ce qui fait tomber les frais autour de 2 à 3 %.</p></details>
+      <details><summary>Les frais de notaire sont-ils négociables ?</summary><p>Les émoluments sont encadrés par décret et non négociables, mais ils peuvent baisser pour les très gros montants. Les taxes, elles, sont fixes.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap"><p>CalcUtile — estimation indicative, le notaire fournira le décompte exact.</p><p><a href="privacy.html">Confidentialité</a></p></div></footer>
+
+<script>
+var eur = function(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); };
+document.getElementById('calc').addEventListener('click', function(){
+  var prix=+document.getElementById('prix').value||0, t=document.getElementById('type').value;
+  if(prix<=0){ alert('Renseigne un prix d\'achat.'); return; }
+  var r;
+  if(t==='neuf') r={mut:0.00715, emo:0.00814, csi:0.001, div:0.005};
+  else          r={mut:0.058,   emo:0.00814, csi:0.001, div:0.010};
+  var l1=prix*r.mut, l2=prix*r.emo, l3=prix*r.csi, l4=prix*r.div;
+  var tot=l1+l2+l3+l4;
+  document.getElementById('tot').innerHTML = eur(tot)+' <small>de frais estimés</small>';
+  document.getElementById('l1').textContent=eur(l1);
+  document.getElementById('l2').textContent=eur(l2);
+  document.getElementById('l3').textContent=eur(l3);
+  document.getElementById('l4').textContent=eur(l4);
+  document.getElementById('l5').textContent=eur(tot);
+  document.getElementById('l6').textContent=eur(prix+tot);
+  document.getElementById('res').classList.add('show');
+});
+</script>
+</body>
+</html>

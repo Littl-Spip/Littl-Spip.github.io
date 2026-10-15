@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacité d'emprunt immobilier — combien puis-je emprunter ? (gratuit)</title>
+<meta name="description" content="Calcule ta capacité d'emprunt immobilier selon tes revenus, tes charges et ton taux d'endettement. Gratuit, instantané, sans inscription.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">Calc<span>Utile</span></a>
+    <nav class="top"><a href="index.html">Accueil</a><a href="simulateur-credit-immobilier.html">Crédit</a><a href="frais-de-notaire.html">Frais de notaire</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Accueil</a> › Capacité d'emprunt</div>
+    <h1>Capacité d'emprunt immobilier</h1>
+    <p class="lead">Découvre combien tu peux emprunter selon tes revenus et ton taux d'endettement.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="revenus">Revenus nets mensuels du foyer (€)</label><input id="revenus" type="number" value="3500"></div>
+        <div><label for="charges">Charges de crédit mensuelles (€)</label><input id="charges" type="number" value="0"></div>
+        <div><label for="endettement">Taux d'endettement max (%)</label><input id="endettement" type="number" step="0.5" value="35"></div>
+        <div><label for="taux">Taux annuel du crédit (%)</label><input id="taux" type="number" step="0.01" value="3.5"></div>
+        <div><label for="duree">Durée (années)</label><input id="duree" type="number" value="20"></div>
+        <div><label for="apport">Apport personnel (€)</label><input id="apport" type="number" value="30000"></div>
+      </div>
+      <button id="calc">Calculer ma capacité d'emprunt</button>
+
+      <div class="result" id="res">
+        <div class="big" id="cap">— <small>de financement possible</small></div>
+        <div style="margin-top:12px">
+          <div class="kv"><span>Mensualité maximale</span><b id="mens">—</b></div>
+          <div class="kv"><span>Capital empruntable</span><b id="capK">—</b></div>
+          <div class="kv"><span>Apport</span><b id="app">—</b></div>
+          <div class="kv"><span>Budget total du projet</span><b id="budget">—</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+
+    <h2>Comment fonctionne la capacité d'emprunt ?</h2>
+    <p>Les banques appliquent en général un taux d'endettement maximum de 35 % des revenus nets, assurance comprise. On part donc de la mensualité maximale admissible, puis on la convertit en capital grâce à la formule inverse du crédit : <em>C = M × (1 − (1 + i)<sup>−n</sup>) / i</em>. L'apport s'ajoute pour obtenir le budget total du projet.</p>
+
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+      <details><summary>Mon apport est-il suffisant ?</summary><p>En pratique, il faut souvent financer les frais de notaire (7 à 8 % dans l'ancien). Calcule-les avec notre <a href="frais-de-notaire.html">simulateur de frais de notaire</a>.</p></details>
+      <details><summary>Puis-je dépasser 35 % d'endettement ?</summary><p>C'est possible dans certains cas (haut revenus, reste à vivre confortable) mais reste l'exception. Le calcul ici est une estimation prudente.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap"><p>CalcUtile — estimation indicative, ne remplace pas l'étude de ta banque.</p><p><a href="privacy.html">Confidentialité</a></p></div></footer>
+
+<script>
+var eur = function(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); };
+document.getElementById('calc').addEventListener('click', function(){
+  var revenus=+document.getElementById('revenus').value||0;
+  var charges=+document.getElementById('charges').value||0;
+  var end=+document.getElementById('endettement').value||0;
+  var tauxA=+document.getElementById('taux').value||0;
+  var annees=+document.getElementById('duree').value||0;
+  var apport=+document.getElementById('apport').value||0;
+  var n=Math.round(annees*12);
+  var mensMax = revenus*end/100 - charges;
+  if(mensMax<=0 || n<=0){ alert('Avec ces valeurs, la mensualité maximale est nulle. Réduis tes charges ou augmente tes revenus.'); return; }
+  var i=tauxA/100/12;
+  var capital = i===0 ? mensMax*n : mensMax*(1-Math.pow(1+i,-n))/i;
+  document.getElementById('cap').innerHTML = eur(capital) + ' <small>de financement possible</small>';
+  document.getElementById('mens').textContent = eur(mensMax);
+  document.getElementById('capK').textContent = eur(capital);
+  document.getElementById('app').textContent = eur(apport);
+  document.getElementById('budget').textContent = eur(capital+apport);
+  document.getElementById('res').classList.add('show');
+});
+</script>
+</body>
+</html>

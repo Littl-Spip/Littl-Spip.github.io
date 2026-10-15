@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcul de TVA — convertisseur HT / TTC gratuit</title>
+<meta name="description" content="Convertis un montant HT en TTC (ou l'inverse) à tous les taux de TVA : 20 %, 10 %, 5,5 % et 2,1 %. Gratuit et instantané.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html">Calc<span>Utile</span></a>
+    <nav class="top"><a href="index.html">Accueil</a><a href="salaire-brut-net.html">Salaire</a><a href="impot-revenu.html">Impôt</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Accueil</a> › Calcul de TVA</div>
+    <h1>Calcul de TVA (HT ↔ TTC)</h1>
+    <p class="lead">Convertis un prix hors taxes en toutes taxes comprises, ou l'inverse.</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="montant">Montant (€)</label><input id="montant" type="number" step="0.01" value="100"></div>
+        <div><label for="taux">Taux de TVA</label>
+          <select id="taux"><option value="20">20 % (normal)</option><option value="10">10 % (intermédiaire)</option><option value="5.5">5,5 % (réduit)</option><option value="2.1">2,1 % (particulier)</option></select>
+        </div>
+        <div><label for="sens">Sens du calcul</label>
+          <select id="sens"><option value="ht">HT → TTC</option><option value="ttc">TTC → HT</option></select>
+        </div>
+      </div>
+      <button id="calc">Calculer</button>
+
+      <div class="result" id="res">
+        <div class="big" id="out">— <small>TTC</small></div>
+        <div style="margin-top:12px">
+          <div class="kv"><span>Montant HT</span><b id="ht">—</b></div>
+          <div class="kv"><span>Montant de TVA</span><b id="tva">—</b></div>
+          <div class="kv"><span>Montant TTC</span><b id="ttc">—</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad"><!-- Emplacement publicité (AdSense) --></div>
+
+    <h2>Quels sont les taux de TVA en France ?</h2>
+    <ul style="margin:10px 0 10px 20px">
+      <li><b>20 %</b> : taux normal, majorité des biens et services.</li>
+      <li><b>10 %</b> : restauration, rénovation de logements, transports.</li>
+      <li><b>5,5 %</b> : produits alimentaires, livres, énergie.</li>
+      <li><b>2,1 %</b> : médicaments remboursables, presse.</li>
+    </ul>
+
+    <h2>Questions fréquentes</h2>
+    <div class="faq">
+      <details><summary>Formule HT → TTC</summary><p>TTC = HT × (1 + taux). Exemple : 100 € HT à 20 % = 120 € TTC.</p></details>
+      <details><summary>Formule TTC → HT</summary><p>HT = TTC ÷ (1 + taux). Exemple : 120 € TTC à 20 % = 100 € HT.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap"><p>CalcUtile — outil de calcul gratuit.</p><p><a href="privacy.html">Confidentialité</a></p></div></footer>
+
+<script>
+var eur = function(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2}).format(n); };
+document.getElementById('calc').addEventListener('click', function(){
+  var m=+document.getElementById('montant').value||0;
+  var t=+document.getElementById('taux').value||0;
+  var s=document.getElementById('sens').value;
+  var ht, ttc;
+  if(s==='ht'){ ht=m; ttc=m*(1+t/100); } else { ttc=m; ht=m/(1+t/100); }
+  var tva=ttc-ht;
+  document.getElementById('out').innerHTML=eur(s==='ht'?ttc:ht)+' <small>'+(s==='ht'?'TTC':'HT')+'</small>';
+  document.getElementById('ht').textContent=eur(ht);
+  document.getElementById('tva').textContent=eur(tva);
+  document.getElementById('ttc').textContent=eur(ttc);
+  document.getElementById('res').classList.add('show');
+});
+</script>
+</body>
+</html>
