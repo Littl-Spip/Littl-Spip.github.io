@@ -378,7 +378,7 @@ nav.top a.nav-cta{border:1px solid #b9cdef;background:linear-gradient(120deg,#ed
   .print-foot{margin-top:22px;font-size:.76rem;color:#5b6b84;border-top:1px solid #e6ebf3;padding-top:10px}
 }
 
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-2,.calculator-card .grid-2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
 .form-section-title{font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:22px 0 2px}
 
 /* --- Comparateur de deux offres de pret (2026-11-12) --- */
