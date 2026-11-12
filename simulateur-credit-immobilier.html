@@ -85,6 +85,7 @@
             <thead><tr><th>Durée</th><th>Mensualité</th><th>Coût total du crédit</th><th>Écart</th></tr></thead>
             <tbody id="compare-body"></tbody>
           </table>
+          <p class="compare-insight" id="compare-insight"></p>
           <p class="note">Le coût total du crédit comprend les intérêts et l'assurance. Une mensualité plus basse sur une durée longue coûte souvent beaucoup plus cher au total.</p>
         </div>
 
@@ -212,19 +213,35 @@ function calc(){
 }
 
 function renderCompare(d){
-  var rows = '', reference = d.mensTotale;
+  var rows = '', reference = d.mensTotale, lignes = [];
   DUREES.forEach(function(annees){
     var n = annees*12;
     var m = mensualite(d.C, d.tauxA, n);
     var mensAss = d.C*(d.assA/100)/12;
     var mensTotale = m + mensAss;
     var cout = (m*n - d.C) + mensAss*n;
-    var ecart = mensTotale - reference;
-    var ecartTxt = annees === d.annees ? 'ta durée' : (ecart > 0 ? '+' + eur(ecart) + ' /mois' : eur(ecart) + ' /mois');
-    var cls = annees === d.annees ? ' class="is-current"' : '';
-    rows += '<tr'+cls+'><td><strong>'+annees+' ans</strong></td><td>'+eur(mensTotale)+'</td><td>'+eur(cout)+'</td><td>'+ecartTxt+'</td></tr>';
+    lignes.push({ annees:annees, mensTotale:mensTotale, cout:cout });
+  });
+  var minCout = Math.min.apply(null, lignes.map(function(l){ return l.cout; }));
+  lignes.forEach(function(l){
+    var ecart = l.mensTotale - reference;
+    var ecartTxt = l.annees === d.annees ? 'ta durée' : (ecart > 0 ? '+' + eur(ecart) + ' /mois' : eur(ecart) + ' /mois');
+    var cls = l.annees === d.annees ? 'is-current' : '';
+    var tag = Math.abs(l.cout - minCout) < 1 ? ' <span class="cheapest-tag">le moins cher</span>' : '';
+    rows += '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td><strong>'+l.annees+' ans</strong>'+tag+'</td><td>'+eur(l.mensTotale)+'</td><td>'+eur(l.cout)+'</td><td>'+ecartTxt+'</td></tr>';
   });
   $id('compare-body').innerHTML = rows;
+
+  var best = lignes.filter(function(l){ return Math.abs(l.cout - minCout) < 1; })[0];
+  var insight = $id('compare-insight');
+  if(insight && best){
+    if(best.annees === d.annees){
+      insight.textContent = 'Bonne nouvelle : ta durée actuelle est déjà la moins chère au total sur cette base de taux.';
+    } else {
+      var surcoutMois = best.mensTotale - reference;
+      insight.innerHTML = 'La durée la moins chère au total est <strong>' + best.annees + ' ans</strong> (' + eur(best.cout) + '), soit <strong>' + eur(Math.abs(surcoutMois)) + ' de ' + (surcoutMois > 0 ? 'plus' : 'moins') + ' par mois</strong> que ta durée actuelle.';
+    }
+  }
 }
 
 function buildPrintDoc(){
