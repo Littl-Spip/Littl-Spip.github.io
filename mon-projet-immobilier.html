@@ -58,6 +58,14 @@
 
     <div class="project-layout">
       <form class="project-form" id="project-form" novalidate>
+        <div class="example-start" aria-label="Exemples pour découvrir le calcul">
+          <div><b>Tu veux voir comment ça marche ?</b><small>Choisis un exemple fictif, puis remplace les chiffres par les tiens.</small></div>
+          <div class="example-buttons">
+            <button type="button" class="example-choice" data-example="solo">Premier achat seul</button>
+            <button type="button" class="example-choice" data-example="couple">À deux, avec un crédit auto</button>
+          </div>
+          <span class="example-status" id="example-status" role="status" aria-live="polite"></span>
+        </div>
         <section class="card project-card">
           <div class="project-card-head">
             <span class="project-step">1</span>
@@ -66,7 +74,7 @@
           <div class="grid">
             <div><label for="revenus">Revenus nets mensuels du foyer</label><input id="revenus" type="number" inputmode="decimal" min="0" max="50000" step="50" value="3200"><span class="field-help">Somme des salaires nets, hors primes exceptionnelles.</span></div>
             <div><label for="credits">Mensualités de crédits en cours</label><input id="credits" type="number" inputmode="decimal" min="0" max="20000" step="10" value="0"><span class="field-help">Auto, conso, prêt étudiant… La banque les additionne.</span></div>
-            <div><label for="charges">Charges courantes mensuelles</label><input id="charges" type="number" inputmode="decimal" min="0" max="20000" step="50" value="900"><span class="field-help">Loyer actuel, énergie, assurances, garde d'enfants.</span></div>
+            <div><label for="charges">Dépenses qui continueront après l'achat</label><input id="charges" type="number" inputmode="decimal" min="0" max="20000" step="50" value="900"><span class="field-help">Énergie, assurances, garde… Ne compte pas ton loyer actuel s'il s'arrête.</span></div>
           </div>
         </section>
 
@@ -105,8 +113,8 @@
 
           <div class="slider-row">
             <div class="slider-head"><label for="duree">Durée du prêt</label><output id="duree-out">20 ans</output></div>
-            <input id="duree" class="range" type="range" min="5" max="35" step="1" value="20">
-            <div class="slider-scale"><span>5 ans</span><span>20 ans</span><span>35 ans</span></div>
+            <input id="duree" class="range" type="range" min="5" max="25" step="1" value="20">
+            <div class="slider-scale"><span>5 ans</span><span>20 ans</span><span>25 ans</span></div>
           </div>
 
           <div class="grid grid-2">
@@ -121,6 +129,7 @@
 
       <aside class="project-summary" aria-label="Résultat du projet">
         <div class="summary-card">
+          <p class="summary-caveat">Repères indicatifs pour t'aider à comprendre le projet ; seule une banque peut décider d'accorder un prêt.</p>
           <div class="summary-top">
             <span class="summary-label">Mensualité totale estimée</span>
             <div class="summary-mens" id="summary-mens">—</div>
@@ -181,8 +190,13 @@
 
     <div class="ad"><!-- Emplacement publicitaire (AdSense) --></div>
 
+    <section class="worked-example" aria-labelledby="example-title">
+      <span class="section-kicker">Exemple avec les valeurs de départ</span>
+      <h2 id="example-title">Un achat à 190 000 € : que racontent les chiffres ?</h2>
+      <p>Pour 3 200 € de revenus mensuels, 35 000 € d'apport, un bien ancien à 190 000 € et un prêt de 20 ans à 3,5 % avec 0,34 % d'assurance : le calcul estime une mensualité de 1 042 € assurance comprise. L'endettement ressort à 32,6 % et le reste après 900 € de dépenses conservées à 1 258 €. Change une hypothèse dans le formulaire : les résultats se recalculent immédiatement.</p>
+    </section>
     <h2>Comment lire ces trois jauges</h2>
-    <p>La première jauge est le <strong>taux d'endettement</strong> : la part de tes revenus nets absorbée par les crédits. Les banques visent 35 % au maximum, et ce seuil inclut la nouvelle mensualité comme les crédits déjà en cours. Au-delà, le dossier devient difficile à défendre, même avec un bon apport.</p>
+    <p>La première jauge est le <strong>taux d'effort</strong> : la part des revenus consacrée aux remboursements de crédit, assurance comprise. Le repère réglementaire est en principe de 35 % et la durée maximale du prêt est en principe de 25 ans. Des dérogations encadrées existent ; seule la banque peut examiner un dossier complet.</p>
     <p>La deuxième compare ton <strong>apport aux frais</strong> : notaire, travaux et garantie. Un apport qui couvre les frais évite de financer des dépenses qui ne prennent pas de valeur. Ce n'est pas une obligation légale, mais c'est un repère solide pour négocier.</p>
     <p>La troisième mesure le <strong>reste à vivre</strong> : ce qu'il te reste chaque mois après la mensualité, les crédits et les charges courantes. C'est la jauge la plus personnelle : deux foyers avec les mêmes revenus n'ont pas les mêmes besoins.</p>
 
@@ -218,7 +232,7 @@
 
     <h2>Sources et méthode</h2>
     <ul>
-      <li>Seuil de 35 % : recommandation du Haut Conseil de stabilité financière.</li>
+      <li>Repères de 35 % et 25 ans : <a href="https://www.economie.gouv.fr/hcsf/mesures/mesure-relative-loctroi-de-credits-immobiliers" target="_blank" rel="noopener">Haut Conseil de stabilité financière</a>.</li>
       <li>Frais de notaire : ordres de grandeur usuels, à confirmer avec le notaire.</li>
       <li>Assurance emprunteur : <a href="https://www.service-public.fr/particuliers/vosdroits/F34285" rel="nofollow noopener" target="_blank">service-public.fr</a>.</li>
     </ul>
@@ -261,6 +275,23 @@ function capitalFromPayment(m, tauxA, n){
 
 var etat = { ok:false, data:null };
 
+var exemples = {
+  solo: { revenus:2600, credits:220, charges:650, prix:155000, travaux:0, apport:22000, taux:3.5, assurance:0.34, garantie:1.2, duree:20, type:'ancien' },
+  couple: { revenus:4200, credits:240, charges:850, prix:220000, travaux:0, apport:40000, taux:3.5, assurance:0.34, garantie:1.2, duree:20, type:'ancien' }
+};
+
+document.querySelectorAll('.example-choice').forEach(function(button){
+  button.addEventListener('click', function(){
+    var values = exemples[button.dataset.example];
+    if(!values) return;
+    Object.keys(values).forEach(function(key){ $(key).value = values[key]; });
+    $('duree-out').textContent = values.duree + ' ans';
+    $('example-status').textContent = 'Exemple chargé : modifie les montants pour voir ton propre résultat.';
+    calc();
+    $('revenus').focus({preventScroll:true});
+  });
+});
+
 function calc(){
   var revenus = Number($('revenus').value);
   var credits = Number($('credits').value);
@@ -277,10 +308,10 @@ function calc(){
   var err = $('calc-error');
   var ok = [revenus,credits,charges,prix,travaux,apport,taux,assurance,garantiePct].every(function(v){ return Number.isFinite(v) && v >= 0; })
     && revenus <= 50000 && prix <= 5000000 && taux <= 20 && assurance <= 5 && garantiePct <= 5
-    && annees >= 5 && annees <= 35;
+    && annees >= 5 && annees <= 25;
 
   if(!ok){
-    err.textContent = 'Vérifie les valeurs : montants positifs, revenus jusqu\'à 50 000 €, taux de 0 à 20 %, assurance et garantie de 0 à 5 %, durée de 5 à 35 ans.';
+    err.textContent = 'Vérifie les valeurs : montants positifs, revenus jusqu\'à 50 000 €, taux de 0 à 20 %, assurance et garantie de 0 à 5 %, durée de 5 à 25 ans.';
     err.hidden = false;
     etat.ok = false;
     return;
@@ -307,7 +338,7 @@ function calc(){
   var mensMax = Math.max(0, revenus*0.35 - credits);
   var perEuro = (emprunt > 0 ? annuity(1, taux, n) : (taux === 0 ? 1/n : 0)) + assurance/100/12;
   var capitalMax = perEuro > 0 ? mensMax / perEuro : 0;
-  var prixMax = (capitalMax + apport - travaux) / (1 + (notairePct + garantiePct)/100);
+  var prixMax = (capitalMax / (1 + garantiePct/100) - travaux + apport) / (1 + notairePct/100);
   if(!Number.isFinite(prixMax) || prixMax < 0) prixMax = 0;
 
   $('frais-notaire').textContent = eur(fraisNotaire);
@@ -350,7 +381,7 @@ function calc(){
     label.textContent = 'Projet autofinancé';
   } else if(endettement <= 35 && reste >= 800 && couverture >= 100){
     status.className = 'summary-status is-good';
-    label.textContent = 'Projet finançable';
+    label.textContent = 'Repères favorables';
   } else if(endettement <= 40 && reste >= 500){
     status.className = 'summary-status is-warn';
     label.textContent = 'À ajuster';

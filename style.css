@@ -559,3 +559,22 @@ input.range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;backgroun
   .flagship-copy{padding:19px 18px}
   .flagship-gauges{padding:17px 18px}
 }
+
+/* D?marrage guid? : exemples concrets et peu de friction. */
+.example-start{display:grid;gap:12px;padding:17px 19px;border:1px solid #d4e3f8;border-radius:15px;background:radial-gradient(340px 100px at 100% 0%,rgba(119,169,240,.16),transparent 70%),linear-gradient(125deg,#fff,#f4f8ff)}
+.example-start>div:first-child{display:grid;gap:3px}
+.example-start>div:first-child b{color:#173f86;font-size:.93rem}
+.example-start small{color:#637694;font-size:.77rem;line-height:1.45}
+.example-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.example-choice{min-height:40px;padding:9px 13px;border:1px solid #bfd2f0;border-radius:11px;background:linear-gradient(135deg,#fff,#eaf2ff);color:#214c98;font:inherit;font-size:.78rem;font-weight:720;cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s}
+.example-choice:hover{transform:translateY(-1px);border-color:#769dd7;box-shadow:0 5px 14px rgba(36,78,145,.12)}
+.example-choice:focus-visible{outline:3px solid rgba(62,111,202,.35);outline-offset:2px}
+.example-status{min-height:1em;color:#35649f;font-size:.75rem}
+@media(max-width:600px){.example-start{padding:15px}.example-buttons{display:grid;grid-template-columns:1fr}.example-choice{text-align:left}}
+@media(prefers-reduced-motion:reduce){.example-choice{transition:none}}
+.summary-caveat{margin:0 0 12px;padding:9px 11px;border:1px solid #dce8f7;border-radius:10px;background:#f5f8fd;color:#5e6f87;font-size:.72rem;line-height:1.45}
+.worked-example{margin:32px 0 26px;padding:23px 25px;border:1px solid #d7e5f8;border-radius:17px;background:radial-gradient(380px 130px at 100% 0%,rgba(121,171,244,.14),transparent 72%),linear-gradient(130deg,#fff,#f6f9ff)}
+.worked-example h2{margin:5px 0 8px;color:#173f86;font-size:1.2rem}
+.worked-example p{max-width:82ch;margin:0;color:#526581;line-height:1.7}
+@media(max-width:600px){.worked-example{padding:18px;margin:24px 0}.worked-example h2{font-size:1.06rem}}
+
