@@ -260,7 +260,7 @@ function buildPrintDoc(){
   if(!doc) return;
   doc.innerHTML =
     '<div class="print-head"><strong>CalcUtile</strong><span>Récapitulatif de crédit immobilier — ' + date + '</span></div>' +
-    '<h1>Mon projet de crédit</h1>' +
+    '<div class="print-h1">Mon projet de crédit</div>' +
     '<table class="print-table"><tbody>' +
     '<tr><th>Montant emprunté</th><td>' + eur(d.C) + '</td></tr>' +
     '<tr><th>Durée</th><td>' + d.annees + ' ans (' + d.n + ' mensualités)</td></tr>' +
